@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   CreatorSuite — Nothing Dot Matrix design tokens (§4)
+   Strict black/white spectrum + red accent. Sharp corners. No gradients.
+   ========================================================================= */
+
+@theme {
+  /* Color system (§4.2) */
+  --color-cs-bg: #000000;
+  --color-cs-surface: #0a0a0a;
+  --color-cs-border: #1a1a1a;
+  --color-cs-fg: #ffffff;
+  --color-cs-fg-muted: #666666;
+  --color-cs-fg-dim: #333333;
+  --color-cs-accent: #ff0000;
+  --color-cs-accent-dim: #660000;
+  --color-cs-success: #ffffff;
+  --color-cs-warn: #ff0000;
+
+  /* Fonts (§4.1) — wired to next/font CSS variables in layout.tsx */
+  --font-display: var(--font-silkscreen), "Courier New", monospace;
+  --font-mono: var(--font-share-tech-mono), "Courier New", monospace;
+
+  /* Fixed pixel font scale (§4.1) — not fluid */
+  --text-cs-12: 12px;
+  --text-cs-16: 16px;
+  --text-cs-24: 24px;
+  --text-cs-32: 32px;
+  --text-cs-48: 48px;
+  --text-cs-64: 64px;
+}
+
+:root {
+  /* Dot grid texture vars (§4.3) */
+  --cs-dot-color: #141414;
+  --cs-dot-size: 1px;
+  --cs-dot-gap: 8px;
+}
+
+@layer base {
+  /* Sharp corners only — Nothing's aesthetic is angular (§4.3) */
+  *,
+  *::before,
+  *::after {
+    border-radius: 0 !important;
+  }
+
+  html {
+    height: 100%;
+  }
+
+  body {
+    min-height: 100%;
+    background-color: var(--color-cs-bg);
+    color: var(--color-cs-fg);
+    font-family: var(--font-mono);
+    /* Subtle dot matrix background texture (§4.3) */
+    background-image: radial-gradient(
+      var(--cs-dot-color) var(--cs-dot-size),
+      transparent var(--cs-dot-size)
+    );
+    background-size: var(--cs-dot-gap) var(--cs-dot-gap);
+    background-position: -1px -1px;
+  }
+
+  /* White caret in inputs (§4.4) */
+  input,
+  textarea,
+  select {
+    caret-color: var(--color-cs-accent);
+  }
+
+  /* Headings & display elements default to the pixel font */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+}
+
+@layer utilities {
+  /* Nothing's signature filled red square dot indicator (§4.4) */
+  .cs-dot::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-cs-accent);
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* Custom dot-matrix range slider (§4.4): dotted track + square thumb */
+  .cs-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 24px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .cs-slider::-webkit-slider-runnable-track {
+    height: 2px;
+    background-image: radial-gradient(
+      var(--color-cs-fg-muted) 1px,
+      transparent 1px
+    );
+    background-size: 6px 2px;
+    background-repeat: repeat-x;
+    background-position: center;
+  }
+  .cs-slider::-moz-range-track {
+    height: 2px;
+    background-image: radial-gradient(
+      var(--color-cs-fg-muted) 1px,
+      transparent 1px
+    );
+    background-size: 6px 2px;
+    background-repeat: repeat-x;
+    background-position: center;
+  }
+  .cs-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    margin-top: -6px;
+    background: var(--color-cs-accent);
+    border: 0;
+  }
+  .cs-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--color-cs-accent);
+    border: 0;
+  }
+}
