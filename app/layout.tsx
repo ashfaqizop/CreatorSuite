@@ -6,6 +6,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { AdSlot } from "@/components/AdSlot";
 import { SessionProvider } from "@/components/providers/SessionProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const silkscreen = Silkscreen({
   variable: "--font-silkscreen",
@@ -66,6 +67,7 @@ export default function RootLayout({
 
           <Footer />
         </SessionProvider>
+        <Analytics />
       </body>
     </html>
   );
