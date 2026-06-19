@@ -23,6 +23,10 @@ export const metadata: Metadata = {
   title: "CreatorSuite — Creator Monetization Tools",
   description:
     "21 specialized micro-tools for calculating, predicting, and optimizing creator business income. Dot Matrix design.",
+  // Google Search Console (URL-prefix) HTML-tag verification, set via env.
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
