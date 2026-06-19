@@ -10,6 +10,10 @@ import { meta as affiliateRoi } from "./affiliate-roi/calc";
 import { meta as usageRights } from "./usage-rights/calc";
 import { meta as platformBundler } from "./platform-bundler/calc";
 import { meta as blogRpm } from "./blog-rpm/calc";
+import { meta as tiktokRewards } from "./tiktok-rewards/calc";
+import { meta as shortformEstimator } from "./shortform-estimator/calc";
+import { meta as podcastAds } from "./podcast-ads/calc";
+import { meta as newsletterSim } from "./newsletter-sim/calc";
 
 /** Tool registry (§3). Order = display order within categories. */
 export const TOOL_METAS: ToolMeta[] = [
@@ -26,6 +30,11 @@ export const TOOL_METAS: ToolMeta[] = [
   usageRights,
   platformBundler,
   blogRpm,
+  // v1.2
+  tiktokRewards,
+  shortformEstimator,
+  podcastAds,
+  newsletterSim,
 ];
 
 export function getToolMeta(slug: string): ToolMeta | undefined {

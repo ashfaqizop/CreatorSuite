@@ -10,6 +10,10 @@ import * as affiliateRoi from "./affiliate-roi/calc";
 import * as usageRights from "./usage-rights/calc";
 import * as platformBundler from "./platform-bundler/calc";
 import * as blogRpm from "./blog-rpm/calc";
+import * as tiktokRewards from "./tiktok-rewards/calc";
+import * as shortformEstimator from "./shortform-estimator/calc";
+import * as podcastAds from "./podcast-ads/calc";
+import * as newsletterSim from "./newsletter-sim/calc";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type ReportBuilder = (inputs: any, result: any) => ToolReport;
@@ -27,6 +31,10 @@ export const REPORT_BUILDERS: Record<string, ReportBuilder> = {
   "usage-rights": usageRights.buildReport,
   "platform-bundler": platformBundler.buildReport,
   "blog-rpm": blogRpm.buildReport,
+  "tiktok-rewards": tiktokRewards.buildReport,
+  "shortform-estimator": shortformEstimator.buildReport,
+  "podcast-ads": podcastAds.buildReport,
+  "newsletter-sim": newsletterSim.buildReport,
 };
 
 export function buildReportFor(

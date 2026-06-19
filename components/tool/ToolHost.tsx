@@ -20,6 +20,10 @@ const REGISTRY: Record<string, ToolComponent> = {
   "usage-rights": dynamic(() => import("@/lib/tools/usage-rights/Tool"), { ssr: false }),
   "platform-bundler": dynamic(() => import("@/lib/tools/platform-bundler/Tool"), { ssr: false }),
   "blog-rpm": dynamic(() => import("@/lib/tools/blog-rpm/Tool"), { ssr: false }),
+  "tiktok-rewards": dynamic(() => import("@/lib/tools/tiktok-rewards/Tool"), { ssr: false }),
+  "shortform-estimator": dynamic(() => import("@/lib/tools/shortform-estimator/Tool"), { ssr: false }),
+  "podcast-ads": dynamic(() => import("@/lib/tools/podcast-ads/Tool"), { ssr: false }),
+  "newsletter-sim": dynamic(() => import("@/lib/tools/newsletter-sim/Tool"), { ssr: false }),
 };
 
 export function ToolHost({

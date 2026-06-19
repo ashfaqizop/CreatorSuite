@@ -27,7 +27,11 @@
       "Bash(git commit -q -m 'Add /ads.txt route for AdSense account authorization *)",
       "Bash(git commit -q -m 'Add Guides section, full Privacy Policy, and Terms of Service *)",
       "Bash(git commit -q -m 'Add env-driven Google Search Console meta-tag verification *)",
-      "Bash(git commit -q -m 'Add sitemap.xml and robots.txt for search indexing *)"
+      "Bash(git commit -q -m 'Add sitemap.xml and robots.txt for search indexing *)",
+      "Bash(curl -s -I https://creator-suite-sigma.vercel.app/sitemap.xml)",
+      "Bash(curl -s https://creator-suite-sigma.vercel.app/sitemap.xml)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -A \"Mozilla/5.0 \\(compatible; Googlebot/2.1; +http://www.google.com/bot.html\\)\" https://creator-suite-sigma.vercel.app/sitemap.xml)",
+      "Bash(git commit -q -m 'v1.2: TikTok Rewards, Shorts/Reels, Podcast Ads, Newsletter + changelog *)"
     ],
     "additionalDirectories": [
       "d:\\ADIB\\AAA APLICATIONS",

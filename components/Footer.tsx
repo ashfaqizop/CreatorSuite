@@ -8,6 +8,7 @@ export function Footer() {
           {[
             { href: "/about", label: "About" },
             { href: "/guides", label: "Guides" },
+            { href: "/changelog", label: "Changelog" },
             { href: "/privacy", label: "Privacy" },
             { href: "/terms", label: "Terms" },
             { href: "/settings", label: "Settings" },

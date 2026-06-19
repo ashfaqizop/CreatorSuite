@@ -204,6 +204,45 @@ export const USAGE_RIGHTS: UsageRightsBench = {
 /** Default discount applied when bundling deliverables across platforms (§ tool 10). */
 export const BUNDLE_DISCOUNT_DEFAULT = 10;
 
+// =============================================================================
+// v1.2 benchmark data (§3 Phase v1.2)
+// =============================================================================
+
+/** TikTok Creator Rewards RPM per 1000 qualified views (§ tool 12). */
+export const TIKTOK_RPM: Range = { low: 0.4, mid: 0.7, high: 1.0 };
+export const TIKTOK_US_PREMIUM = 1.5;
+
+/** Short-form (Shorts/Reels) RPM per 1000 views by platform (§ tool 13). */
+export type ShortPlatform = "youtube-shorts" | "instagram-reels" | "facebook-reels";
+export const SHORT_PLATFORM_LABELS: Record<ShortPlatform, string> = {
+  "youtube-shorts": "YouTube Shorts",
+  "instagram-reels": "Instagram Reels",
+  "facebook-reels": "Facebook Reels",
+};
+export const SHORTFORM_RPM: Record<ShortPlatform, Range> = {
+  "youtube-shorts": { low: 0.04, mid: 0.08, high: 0.15 },
+  "instagram-reels": { low: 0.02, mid: 0.05, high: 0.1 },
+  "facebook-reels": { low: 0.02, mid: 0.04, high: 0.08 },
+};
+
+/** Podcast audio-ad CPM per 1000 downloads by ad type (§ tool 14). */
+export type PodcastAdType = "preroll" | "midroll" | "hostread";
+export const PODCAST_AD_LABELS: Record<PodcastAdType, string> = {
+  preroll: "Pre-roll (dynamic)",
+  midroll: "Mid-roll (dynamic)",
+  hostread: "Host-read",
+};
+export const PODCAST_CPM: Record<PodcastAdType, Range> = {
+  preroll: { low: 12, mid: 18, high: 25 },
+  midroll: { low: 18, mid: 25, high: 35 },
+  hostread: { low: 22, mid: 30, high: 45 },
+};
+
+/** Newsletter free→paid conversion rate range (%) (§ tool 15). */
+export const NEWSLETTER_CONVERSION: Range = { low: 3, mid: 6, high: 10 };
+/** Default paid-newsletter platform fee (Substack) %. */
+export const NEWSLETTER_FEE_DEFAULT = 10;
+
 /** The complete benchmark bundle returned to the client. */
 export interface BenchmarkBundle {
   lastUpdated: string;
@@ -218,6 +257,12 @@ export interface BenchmarkBundle {
   affiliate: Record<NicheSlug, AffiliateBench>;
   blogRpm: Record<BlogNetwork, Range>;
   usageRights: UsageRightsBench;
+  // v1.2
+  tiktokRpm: Range;
+  tiktokUsPremium: number;
+  shortformRpm: Record<ShortPlatform, Range>;
+  podcastCpm: Record<PodcastAdType, Range>;
+  newsletterConversion: Range;
 }
 
 export const SEED_BUNDLE: BenchmarkBundle = {
@@ -232,4 +277,9 @@ export const SEED_BUNDLE: BenchmarkBundle = {
   affiliate: AFFILIATE,
   blogRpm: BLOG_RPM,
   usageRights: USAGE_RIGHTS,
+  tiktokRpm: TIKTOK_RPM,
+  tiktokUsPremium: TIKTOK_US_PREMIUM,
+  shortformRpm: SHORTFORM_RPM,
+  podcastCpm: PODCAST_CPM,
+  newsletterConversion: NEWSLETTER_CONVERSION,
 };

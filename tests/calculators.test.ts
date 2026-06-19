@@ -12,6 +12,10 @@ import * as affiliate from "@/lib/tools/affiliate-roi/calc";
 import * as usage from "@/lib/tools/usage-rights/calc";
 import * as bundler from "@/lib/tools/platform-bundler/calc";
 import * as blog from "@/lib/tools/blog-rpm/calc";
+import * as tiktok from "@/lib/tools/tiktok-rewards/calc";
+import * as shortform from "@/lib/tools/shortform-estimator/calc";
+import * as podcast from "@/lib/tools/podcast-ads/calc";
+import * as newsletter from "@/lib/tools/newsletter-sim/calc";
 
 const B = SEED_BUNDLE;
 
@@ -220,5 +224,53 @@ describe("Blog RPM Forecaster (v1.1)", () => {
     expect(r.nicheWeight).toBeCloseTo(156 / 127, 5);
     expect(r.effectiveRpm).toBeCloseTo(12.1852, 3);
     expect(r.revenue).toBeCloseTo(1218.52, 1);
+  });
+});
+
+describe("TikTok Creator Rewards (v1.2)", () => {
+  it("blends RPM by geography", () => {
+    const r = tiktok.calculate({ qualifiedViews: 1_000_000, usTrafficPct: 30 }, B);
+    expect(r.geoWeight).toBeCloseTo(1.15, 5); // 0.3*1.5 + 0.7
+    expect(r.blendedRpm).toBeCloseTo(0.805, 5); // 0.7 * 1.15
+    expect(r.revenue).toBeCloseTo(805, 5);
+  });
+});
+
+describe("Shorts / Reels Estimator (v1.2)", () => {
+  it("applies platform RPM and geo weight", () => {
+    const r = shortform.calculate(
+      { monthlyViews: 2_000_000, platform: "youtube-shorts", usTrafficPct: 40 },
+      B,
+    );
+    expect(r.geoWeight).toBeCloseTo(1.24, 5);
+    expect(r.blendedRpm).toBeCloseTo(0.0992, 5); // 0.08 * 1.24
+    expect(r.revenue).toBeCloseTo(198.4, 5);
+  });
+});
+
+describe("Podcast Audio Ad (v1.2)", () => {
+  it("multiplies downloads × slots × CPM × episodes", () => {
+    const r = podcast.calculate(
+      { downloadsPerEpisode: 5000, episodesPerMonth: 4, adType: "hostread", adSlots: 2 },
+      B,
+    );
+    expect(r.revenuePerEpisode).toBeCloseTo(300, 5); // 5k/1k × 2 slots × $30
+    expect(r.monthly).toBeCloseTo(1200, 5);
+    expect(r.annual).toBeCloseTo(14400, 5);
+  });
+});
+
+describe("Newsletter Simulator (v1.2)", () => {
+  it("computes paid subs, MRR, and net after fees", () => {
+    const r = newsletter.calculate({
+      freeSubscribers: 10000,
+      conversionRate: 6,
+      monthlyPrice: 8,
+      platformFeePct: 10,
+    });
+    expect(r.paidSubs).toBeCloseTo(600, 5);
+    expect(r.grossMrr).toBeCloseTo(4800, 5);
+    expect(r.netMrr).toBeCloseTo(4320, 5);
+    expect(r.annualNet).toBeCloseTo(51840, 5);
   });
 });
