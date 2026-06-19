@@ -1,40 +1,24 @@
 import NextAuth, { type NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
-import { SupabaseAdapter } from "@auth/supabase-adapter";
-import {
-  SUPABASE_URL,
-  SUPABASE_SERVICE_KEY,
-  isSupabaseAdminConfigured,
-} from "@/lib/supabase/config";
 
 const GOOGLE_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 const providers = [];
 if (GOOGLE_ID && GOOGLE_SECRET) {
-  providers.push(
-    Google({ clientId: GOOGLE_ID, clientSecret: GOOGLE_SECRET }),
-  );
+  providers.push(Google({ clientId: GOOGLE_ID, clientSecret: GOOGLE_SECRET }));
 }
 
-// Use the Supabase adapter (DB sessions) only when service creds exist;
-// otherwise fall back to stateless JWT sessions so the app still runs.
-const adapter = isSupabaseAdminConfigured
-  ? SupabaseAdapter({
-      url: SUPABASE_URL!,
-      secret: SUPABASE_SERVICE_KEY!,
-    })
-  : undefined;
-
+// JWT sessions (stateless): no database adapter, so no `next_auth` schema to
+// expose in Supabase. The stable user id is the Google account id (token.sub);
+// estimates + rate cards are stored server-side in public tables keyed by it.
 export const authConfig: NextAuthConfig = {
   providers,
-  adapter,
-  session: { strategy: adapter ? "database" : "jwt" },
+  session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {},
   callbacks: {
-    async session({ session, user }) {
-      if (session.user && user?.id) session.user.id = user.id;
+    async session({ session, token }) {
+      if (session.user && token.sub) session.user.id = token.sub;
       return session;
     },
   },
