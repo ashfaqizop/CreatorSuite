@@ -8,6 +8,20 @@ export interface Release {
 /** Public release history shown on /changelog. Newest first. */
 export const RELEASES: Release[] = [
   {
+    version: "v2.0",
+    date: "June 19, 2026",
+    title: "Full suite — all 21 tools live",
+    items: [
+      "Community Churn Rate Calculator",
+      "Expense & Gear Depreciation Calculator",
+      "Self-Employment Tax Estimator",
+      "Agency / Manager Commission Calculator",
+      "Hook Retention Value Estimator",
+      "Repurposing Velocity Calculator",
+      "All 21 tools across 5 categories now live",
+    ],
+  },
+  {
     version: "v1.2",
     date: "June 19, 2026",
     title: "Ad-revenue & newsletter tools",

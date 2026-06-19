@@ -31,7 +31,8 @@
       "Bash(curl -s -I https://creator-suite-sigma.vercel.app/sitemap.xml)",
       "Bash(curl -s https://creator-suite-sigma.vercel.app/sitemap.xml)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -A \"Mozilla/5.0 \\(compatible; Googlebot/2.1; +http://www.google.com/bot.html\\)\" https://creator-suite-sigma.vercel.app/sitemap.xml)",
-      "Bash(git commit -q -m 'v1.2: TikTok Rewards, Shorts/Reels, Podcast Ads, Newsletter + changelog *)"
+      "Bash(git commit -q -m 'v1.2: TikTok Rewards, Shorts/Reels, Podcast Ads, Newsletter + changelog *)",
+      "Bash(git commit -q -m 'v2.0: final 6 tools — all 21 live \\(Churn, Depreciation, SE Tax, Commission, Hook, Repurposing\\) *)"
     ],
     "additionalDirectories": [
       "d:\\ADIB\\AAA APLICATIONS",

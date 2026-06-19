@@ -14,6 +14,12 @@ import * as tiktokRewards from "./tiktok-rewards/calc";
 import * as shortformEstimator from "./shortform-estimator/calc";
 import * as podcastAds from "./podcast-ads/calc";
 import * as newsletterSim from "./newsletter-sim/calc";
+import * as churnRate from "./churn-rate/calc";
+import * as gearDepreciation from "./gear-depreciation/calc";
+import * as seTax from "./se-tax/calc";
+import * as commissionCalc from "./commission-calc/calc";
+import * as hookRetention from "./hook-retention/calc";
+import * as repurposingVelocity from "./repurposing-velocity/calc";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type ReportBuilder = (inputs: any, result: any) => ToolReport;
@@ -35,6 +41,12 @@ export const REPORT_BUILDERS: Record<string, ReportBuilder> = {
   "shortform-estimator": shortformEstimator.buildReport,
   "podcast-ads": podcastAds.buildReport,
   "newsletter-sim": newsletterSim.buildReport,
+  "churn-rate": churnRate.buildReport,
+  "gear-depreciation": gearDepreciation.buildReport,
+  "se-tax": seTax.buildReport,
+  "commission-calc": commissionCalc.buildReport,
+  "hook-retention": hookRetention.buildReport,
+  "repurposing-velocity": repurposingVelocity.buildReport,
 };
 
 export function buildReportFor(

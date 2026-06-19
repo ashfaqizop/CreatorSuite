@@ -16,6 +16,12 @@ import * as tiktok from "@/lib/tools/tiktok-rewards/calc";
 import * as shortform from "@/lib/tools/shortform-estimator/calc";
 import * as podcast from "@/lib/tools/podcast-ads/calc";
 import * as newsletter from "@/lib/tools/newsletter-sim/calc";
+import * as churn from "@/lib/tools/churn-rate/calc";
+import * as gear from "@/lib/tools/gear-depreciation/calc";
+import * as setax from "@/lib/tools/se-tax/calc";
+import * as commission from "@/lib/tools/commission-calc/calc";
+import * as hook from "@/lib/tools/hook-retention/calc";
+import * as repurposing from "@/lib/tools/repurposing-velocity/calc";
 
 const B = SEED_BUNDLE;
 
@@ -272,5 +278,80 @@ describe("Newsletter Simulator (v1.2)", () => {
     expect(r.grossMrr).toBeCloseTo(4800, 5);
     expect(r.netMrr).toBeCloseTo(4320, 5);
     expect(r.annualNet).toBeCloseTo(51840, 5);
+  });
+});
+
+describe("Community Churn (v2.0)", () => {
+  it("computes churn, lifetime, and LTV", () => {
+    const r = churn.calculate({ startMembers: 500, newMembers: 60, churnedMembers: 25, arpu: 8 });
+    expect(r.churnRate).toBeCloseTo(5, 5);
+    expect(r.retentionRate).toBeCloseTo(95, 5);
+    expect(r.netGrowth).toBe(35);
+    expect(r.endMembers).toBe(535);
+    expect(r.avgLifetimeMonths).toBeCloseTo(20, 5);
+    expect(r.ltv).toBeCloseTo(160, 5);
+  });
+});
+
+describe("Gear Depreciation (v2.0)", () => {
+  it("straight-lines each item and totals", () => {
+    const r = gear.calculate({
+      items: [
+        { name: "Camera", cost: 2000, lifeYears: 5 },
+        { name: "Computer", cost: 2500, lifeYears: 4 },
+        { name: "Lighting", cost: 800, lifeYears: 5 },
+      ],
+    });
+    expect(r.totalCost).toBe(5300);
+    expect(r.totalAnnual).toBeCloseTo(1185, 5); // 400 + 625 + 160
+    expect(r.totalMonthly).toBeCloseTo(98.75, 5);
+  });
+});
+
+describe("Self-Employment Tax (v2.0)", () => {
+  it("applies SE base factor, SS, and Medicare", () => {
+    const r = setax.calculate({ netIncome: 60000, incomeTaxRate: 12 });
+    expect(r.seTax).toBeCloseTo(8477.73, 2); // 55410 × (0.124 + 0.029)
+    expect(r.incomeTax).toBeCloseTo(7200, 5);
+    expect(r.totalTax).toBeCloseTo(15677.73, 2);
+    expect(r.quarterly).toBeCloseTo(3919.4325, 3);
+  });
+});
+
+describe("Agency Commission (v2.0)", () => {
+  it("subtracts commission and expenses", () => {
+    const r = commission.calculate({ grossDeal: 5000, commissionRate: 20, expenses: 0 });
+    expect(r.commission).toBeCloseTo(1000, 5);
+    expect(r.netToCreator).toBeCloseTo(4000, 5);
+    expect(r.takeHomePct).toBeCloseTo(80, 5);
+  });
+});
+
+describe("Hook Retention (v2.0)", () => {
+  it("scales reach by relative retention gain", () => {
+    const r = hook.calculate({
+      currentViews: 100000,
+      currentRetention: 60,
+      targetRetention: 75,
+      rpm: 5,
+    });
+    expect(r.upliftFactor).toBeCloseTo(0.125, 5); // (15/60) × 0.5
+    expect(r.additionalViews).toBeCloseTo(12500, 5);
+    expect(r.additionalRevenue).toBeCloseTo(62.5, 5);
+  });
+});
+
+describe("Repurposing Velocity (v2.0)", () => {
+  it("multiplies pillars × derivatives × reach", () => {
+    const r = repurposing.calculate({
+      pillarsPerMonth: 4,
+      derivativesPerPillar: 6,
+      avgViewsPerDerivative: 5000,
+      rpm: 4,
+    });
+    expect(r.totalDerivatives).toBe(24);
+    expect(r.monthlyReach).toBe(120000);
+    expect(r.revenue).toBeCloseTo(480, 5);
+    expect(r.annualReach).toBe(1440000);
   });
 });

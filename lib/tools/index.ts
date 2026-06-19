@@ -14,6 +14,12 @@ import { meta as tiktokRewards } from "./tiktok-rewards/calc";
 import { meta as shortformEstimator } from "./shortform-estimator/calc";
 import { meta as podcastAds } from "./podcast-ads/calc";
 import { meta as newsletterSim } from "./newsletter-sim/calc";
+import { meta as churnRate } from "./churn-rate/calc";
+import { meta as gearDepreciation } from "./gear-depreciation/calc";
+import { meta as seTax } from "./se-tax/calc";
+import { meta as commissionCalc } from "./commission-calc/calc";
+import { meta as hookRetention } from "./hook-retention/calc";
+import { meta as repurposingVelocity } from "./repurposing-velocity/calc";
 
 /** Tool registry (§3). Order = display order within categories. */
 export const TOOL_METAS: ToolMeta[] = [
@@ -35,6 +41,13 @@ export const TOOL_METAS: ToolMeta[] = [
   shortformEstimator,
   podcastAds,
   newsletterSim,
+  // v2.0
+  churnRate,
+  gearDepreciation,
+  seTax,
+  commissionCalc,
+  hookRetention,
+  repurposingVelocity,
 ];
 
 export function getToolMeta(slug: string): ToolMeta | undefined {

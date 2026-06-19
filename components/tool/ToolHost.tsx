@@ -24,6 +24,12 @@ const REGISTRY: Record<string, ToolComponent> = {
   "shortform-estimator": dynamic(() => import("@/lib/tools/shortform-estimator/Tool"), { ssr: false }),
   "podcast-ads": dynamic(() => import("@/lib/tools/podcast-ads/Tool"), { ssr: false }),
   "newsletter-sim": dynamic(() => import("@/lib/tools/newsletter-sim/Tool"), { ssr: false }),
+  "churn-rate": dynamic(() => import("@/lib/tools/churn-rate/Tool"), { ssr: false }),
+  "gear-depreciation": dynamic(() => import("@/lib/tools/gear-depreciation/Tool"), { ssr: false }),
+  "se-tax": dynamic(() => import("@/lib/tools/se-tax/Tool"), { ssr: false }),
+  "commission-calc": dynamic(() => import("@/lib/tools/commission-calc/Tool"), { ssr: false }),
+  "hook-retention": dynamic(() => import("@/lib/tools/hook-retention/Tool"), { ssr: false }),
+  "repurposing-velocity": dynamic(() => import("@/lib/tools/repurposing-velocity/Tool"), { ssr: false }),
 };
 
 export function ToolHost({
