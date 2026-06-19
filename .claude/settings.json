@@ -25,7 +25,9 @@
       "Bash(git push *)",
       "Bash(vercel --prod)",
       "Bash(git commit -q -m 'Add /ads.txt route for AdSense account authorization *)",
-      "Bash(git commit -q -m 'Add Guides section, full Privacy Policy, and Terms of Service *)"
+      "Bash(git commit -q -m 'Add Guides section, full Privacy Policy, and Terms of Service *)",
+      "Bash(git commit -q -m 'Add env-driven Google Search Console meta-tag verification *)",
+      "Bash(git commit -q -m 'Add sitemap.xml and robots.txt for search indexing *)"
     ],
     "additionalDirectories": [
       "d:\\ADIB\\AAA APLICATIONS",
