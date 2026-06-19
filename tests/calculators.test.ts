@@ -8,6 +8,10 @@ import * as membership from "@/lib/tools/membership-planner/calc";
 import * as product from "@/lib/tools/product-launch/calc";
 import * as quit from "@/lib/tools/quit-job/calc";
 import * as ai from "@/lib/tools/ai-cost/calc";
+import * as affiliate from "@/lib/tools/affiliate-roi/calc";
+import * as usage from "@/lib/tools/usage-rights/calc";
+import * as bundler from "@/lib/tools/platform-bundler/calc";
+import * as blog from "@/lib/tools/blog-rpm/calc";
 
 const B = SEED_BUNDLE;
 
@@ -143,5 +147,78 @@ describe("AI Cost (§5.7)", () => {
     expect(r.netRoi).toBe(1160);
     expect(r.costPerPiece).toBe(2);
     expect(r.breakEvenPieces).toBeCloseTo(0.6667, 3);
+  });
+});
+
+describe("Affiliate ROI (v1.1)", () => {
+  it("computes sales, revenue, EPC, and ROI", () => {
+    const r = affiliate.calculate({
+      niche: "tech",
+      monthlyClicks: 5000,
+      conversionRate: 2,
+      avgOrderValue: 90,
+      commission: 8,
+      contentCost: 0,
+    });
+    expect(r.sales).toBeCloseTo(100, 5);
+    expect(r.revenue).toBeCloseTo(720, 5);
+    expect(r.epc).toBeCloseTo(0.144, 5);
+    expect(r.roi).toBeNull();
+  });
+  it("computes ROI when a cost is given", () => {
+    const r = affiliate.calculate({
+      niche: "tech",
+      monthlyClicks: 5000,
+      conversionRate: 2,
+      avgOrderValue: 90,
+      commission: 8,
+      contentCost: 360,
+    });
+    expect(r.net).toBeCloseTo(360, 5);
+    expect(r.roi).toBeCloseTo(100, 5);
+  });
+});
+
+describe("Usage Rights Multiplier (v1.1)", () => {
+  it("adds term uplift only", () => {
+    const r = usage.calculate(
+      { baseFee: 1000, term: "6mo", exclusivity: false, paidAmplification: false },
+      B,
+    );
+    expect(r.multiplier).toBeCloseTo(1.45, 5);
+    expect(r.totalFee).toBeCloseTo(1450, 5);
+    expect(r.uplift).toBeCloseTo(450, 5);
+  });
+  it("stacks term + exclusivity + paid amplification", () => {
+    const r = usage.calculate(
+      { baseFee: 1000, term: "perpetual", exclusivity: true, paidAmplification: true },
+      B,
+    );
+    // 1 + 1.5 + 0.3 + 0.4 = 3.2
+    expect(r.multiplier).toBeCloseTo(3.2, 5);
+    expect(r.totalFee).toBeCloseTo(3200, 5);
+  });
+});
+
+describe("Multi-Platform Bundler (v1.1)", () => {
+  it("sums active lines and applies the bundle discount", () => {
+    const r = bundler.calculate(bundler.defaultInputs);
+    expect(r.activeCount).toBe(3);
+    expect(r.subtotal).toBe(2900); // 1500 + 800 + 600
+    expect(r.bundlePrice).toBeCloseTo(2610, 5); // 10% off
+    expect(r.savings).toBeCloseTo(290, 5);
+  });
+});
+
+describe("Blog RPM Forecaster (v1.1)", () => {
+  it("weights network RPM by niche and geography", () => {
+    const r = blog.calculate(
+      { monthlyPageviews: 100000, niche: "tech", network: "adsense", usTrafficPct: 40 },
+      B,
+    );
+    expect(r.geoWeight).toBeCloseTo(1.24, 5);
+    expect(r.nicheWeight).toBeCloseTo(156 / 127, 5);
+    expect(r.effectiveRpm).toBeCloseTo(12.1852, 3);
+    expect(r.revenue).toBeCloseTo(1218.52, 1);
   });
 });

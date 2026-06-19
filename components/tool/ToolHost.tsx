@@ -16,6 +16,10 @@ const REGISTRY: Record<string, ToolComponent> = {
   "product-launch": dynamic(() => import("@/lib/tools/product-launch/Tool"), { ssr: false }),
   "quit-job": dynamic(() => import("@/lib/tools/quit-job/Tool"), { ssr: false }),
   "ai-cost": dynamic(() => import("@/lib/tools/ai-cost/Tool"), { ssr: false }),
+  "affiliate-roi": dynamic(() => import("@/lib/tools/affiliate-roi/Tool"), { ssr: false }),
+  "usage-rights": dynamic(() => import("@/lib/tools/usage-rights/Tool"), { ssr: false }),
+  "platform-bundler": dynamic(() => import("@/lib/tools/platform-bundler/Tool"), { ssr: false }),
+  "blog-rpm": dynamic(() => import("@/lib/tools/blog-rpm/Tool"), { ssr: false }),
 };
 
 export function ToolHost({

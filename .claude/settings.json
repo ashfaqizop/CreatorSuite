@@ -15,7 +15,16 @@
       "Bash(curl -s http://localhost:3000/)",
       "PowerShell($conns = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue; if \\($conns\\) { $conns.OwningProcess | Sort-Object -Unique | ForEach-Object { try { Stop-Process -Id $_ -Force -ErrorAction Stop; \"killed PID $_\" } catch {} } } else { \"no listener on 3000\" })",
       "Bash(git rm *)",
-      "Bash(rm -rf \".claude/CreatorSuite.claude.tmp\")"
+      "Bash(rm -rf \".claude/CreatorSuite.claude.tmp\")",
+      "Bash(vercel whoami *)",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('base64'\\)\\)\")",
+      "Bash(echo \"=== tsc exit: $? ===\")",
+      "Bash(npx eslint *)",
+      "Bash(git commit -q -m 'Switch auth to JWT sessions; drop Supabase adapter + next_auth schema *)",
+      "Bash(git commit -q -m 'chore: ignore .vercel \\(Vercel CLI link\\) *)",
+      "Bash(git push *)",
+      "Bash(vercel --prod)",
+      "Bash(git commit -q -m 'Add /ads.txt route for AdSense account authorization *)"
     ],
     "additionalDirectories": [
       "d:\\ADIB\\AAA APLICATIONS",

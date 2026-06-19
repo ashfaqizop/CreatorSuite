@@ -6,9 +6,14 @@ import { meta as membershipPlanner } from "./membership-planner/calc";
 import { meta as productLaunch } from "./product-launch/calc";
 import { meta as quitJob } from "./quit-job/calc";
 import { meta as aiCost } from "./ai-cost/calc";
+import { meta as affiliateRoi } from "./affiliate-roi/calc";
+import { meta as usageRights } from "./usage-rights/calc";
+import { meta as platformBundler } from "./platform-bundler/calc";
+import { meta as blogRpm } from "./blog-rpm/calc";
 
-/** v1.0 MVP tool registry (§3). Order = display order within categories. */
+/** Tool registry (§3). Order = display order within categories. */
 export const TOOL_METAS: ToolMeta[] = [
+  // v1.0
   sponsorshipRate,
   youtubeRpm,
   ugcRate,
@@ -16,6 +21,11 @@ export const TOOL_METAS: ToolMeta[] = [
   productLaunch,
   quitJob,
   aiCost,
+  // v1.1
+  affiliateRoi,
+  usageRights,
+  platformBundler,
+  blogRpm,
 ];
 
 export function getToolMeta(slug: string): ToolMeta | undefined {

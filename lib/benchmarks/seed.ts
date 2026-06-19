@@ -140,6 +140,70 @@ export const AI_TOOL_PRESETS: { id: string; name: string; cost: number }[] = [
 /** US premium multiplier applied to RPM for US traffic share (§5.2). */
 export const US_PREMIUM_FACTOR = 1.6;
 
+// =============================================================================
+// v1.1 benchmark data (§3 Phase v1.1)
+// =============================================================================
+
+/** Affiliate benchmarks by niche (§ tool 8): conversion %, commission %, AOV $. */
+export interface AffiliateBench {
+  conversion: number;
+  commission: number;
+  aov: number;
+}
+export const AFFILIATE: Record<NicheSlug, AffiliateBench> = {
+  finance: { conversion: 2.5, commission: 25, aov: 120 },
+  tech: { conversion: 2.0, commission: 8, aov: 90 },
+  lifestyle: { conversion: 1.5, commission: 12, aov: 60 },
+  gaming: { conversion: 1.8, commission: 10, aov: 50 },
+  "beauty-fashion": { conversion: 2.2, commission: 15, aov: 55 },
+  "food-cooking": { conversion: 1.6, commission: 8, aov: 40 },
+  "fitness-health": { conversion: 2.0, commission: 20, aov: 70 },
+  education: { conversion: 2.5, commission: 30, aov: 100 },
+  travel: { conversion: 1.2, commission: 7, aov: 200 },
+  sports: { conversion: 1.5, commission: 10, aov: 65 },
+  "diy-crafts": { conversion: 1.8, commission: 9, aov: 45 },
+  parenting: { conversion: 1.7, commission: 12, aov: 55 },
+  business: { conversion: 2.3, commission: 25, aov: 150 },
+};
+
+/** Blog/website display-ad session RPM ranges by ad network (§ tool 11). */
+export type BlogNetwork = "adsense" | "ezoic" | "mediavine" | "raptive";
+export const BLOG_NETWORK_LABELS: Record<BlogNetwork, string> = {
+  adsense: "Google AdSense",
+  ezoic: "Ezoic",
+  mediavine: "Mediavine",
+  raptive: "Raptive (AdThrive)",
+};
+export const BLOG_RPM: Record<BlogNetwork, Range> = {
+  adsense: { low: 3, mid: 8, high: 15 },
+  ezoic: { low: 8, mid: 14, high: 22 },
+  mediavine: { low: 15, mid: 25, high: 40 },
+  raptive: { low: 18, mid: 30, high: 48 },
+};
+
+/** Usage-rights uplift fractions added on top of a base content fee (§ tool 9). */
+export type UsageTerm = "organic" | "3mo" | "6mo" | "12mo" | "perpetual";
+export const USAGE_TERM_LABELS: Record<UsageTerm, string> = {
+  organic: "Organic only",
+  "3mo": "3 months",
+  "6mo": "6 months",
+  "12mo": "12 months",
+  perpetual: "Perpetual / buyout",
+};
+export interface UsageRightsBench {
+  terms: Record<UsageTerm, number>;
+  exclusivity: number;
+  paidAmplification: number;
+}
+export const USAGE_RIGHTS: UsageRightsBench = {
+  terms: { organic: 0, "3mo": 0.25, "6mo": 0.45, "12mo": 0.75, perpetual: 1.5 },
+  exclusivity: 0.3,
+  paidAmplification: 0.4,
+};
+
+/** Default discount applied when bundling deliverables across platforms (§ tool 10). */
+export const BUNDLE_DISCOUNT_DEFAULT = 10;
+
 /** The complete benchmark bundle returned to the client. */
 export interface BenchmarkBundle {
   lastUpdated: string;
@@ -150,6 +214,10 @@ export interface BenchmarkBundle {
   ugcRates: Record<UsageTier, Range>;
   platformFees: Record<MembershipPlatform, number>;
   usPremiumFactor: number;
+  // v1.1
+  affiliate: Record<NicheSlug, AffiliateBench>;
+  blogRpm: Record<BlogNetwork, Range>;
+  usageRights: UsageRightsBench;
 }
 
 export const SEED_BUNDLE: BenchmarkBundle = {
@@ -161,4 +229,7 @@ export const SEED_BUNDLE: BenchmarkBundle = {
   ugcRates: UGC_RATES,
   platformFees: PLATFORM_FEES,
   usPremiumFactor: US_PREMIUM_FACTOR,
+  affiliate: AFFILIATE,
+  blogRpm: BLOG_RPM,
+  usageRights: USAGE_RIGHTS,
 };
