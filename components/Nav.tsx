@@ -74,6 +74,12 @@ export function Nav() {
               {c.label}
             </Link>
           ))}
+          <Link
+            href="/guides"
+            className="font-mono text-cs-12 uppercase tracking-wide text-cs-fg-muted hover:text-cs-fg"
+          >
+            Guides
+          </Link>
         </nav>
 
         <div className="hidden md:block">
@@ -102,6 +108,13 @@ export function Nav() {
               {c.label}
             </Link>
           ))}
+          <Link
+            href="/guides"
+            onClick={() => setOpen(false)}
+            className="font-mono text-cs-12 uppercase tracking-wide text-cs-fg-muted"
+          >
+            Guides
+          </Link>
           <AuthButton mobile />
         </div>
       ) : null}
